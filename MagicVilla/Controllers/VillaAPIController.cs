@@ -68,6 +68,23 @@ namespace MagicVilla.Controllers
             VillaStore.villaList.Remove(villa); 
             return Ok(villa);
         }
+
+        [HttpPut("id")]
+        public ActionResult UpdateVilla(int id, [FromBody] VillaDto villaDto)
+        {
+            if (id == null || id == 0)
+                return BadRequest("Please Enter a Valid ID");
+
+            VillaDto villa = VillaStore.villaList.FirstOrDefault(v=>v.ID == id);
+
+            if (villa == null)
+                return NotFound($"No Villa With ID {id}");
+
+            villa.Name = villaDto.Name;
+
+            return Ok(villa);
+        }
+
     }
 
 }
