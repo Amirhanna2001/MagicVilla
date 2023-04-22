@@ -1,5 +1,7 @@
-﻿using MagicVilla.Dtos;
+﻿using MagicVilla.Data;
+using MagicVilla.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace MagicVilla.Controllers
 {
@@ -9,13 +11,23 @@ namespace MagicVilla.Controllers
     {
         public VillaAPIController() { }
         [HttpGet]
-        public IEnumerable<VillaDto> GetVillas()
+        public ActionResult GetVillas()
         {
-            return new List<VillaDto>() { 
-                new VillaDto{ID=1,Name = "Villa 1"},
-                new VillaDto{ID=2,Name = "Villa 2"},
-                
-            };
+            return Ok( VillaStore.villaList);
+        }
+
+        [HttpGet("id")]
+        public ActionResult GetVilla(int id)
+        {
+            if(id == null || id ==  0)
+                return BadRequest();
+
+            VillaDto villa = VillaStore.villaList.FirstOrDefault(v => v.ID == id);
+            if(villa == null) 
+                return NotFound($"No Villa With ID = {id}");
+
+            return Ok( villa );
         }
     }
+
 }
