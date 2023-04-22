@@ -53,7 +53,7 @@ namespace MagicVilla.Controllers
             VillaStore.villaList.Add(villa);
             return Ok(villaToInsert);
         }
-
+        
         [HttpDelete("id")]
         public ActionResult DeleteVilla(int id)
         {
