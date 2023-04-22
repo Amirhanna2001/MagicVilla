@@ -2,6 +2,7 @@
 using MagicVilla.Dtos;
 using MagicVilla.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -85,6 +86,21 @@ namespace MagicVilla.Controllers
             return Ok(villa);
         }
 
+        [HttpPatch("id")]
+        public ActionResult UpdateVillaUsingPath(int id,JsonPatchDocument<VillaDto> villaDto)
+        {
+            if (id == null || id == 0)
+                return BadRequest("Please Enter a Valid ID");
+
+            VillaDto villa = VillaStore.villaList.FirstOrDefault(v => v.ID == id);
+
+            if (villa == null)
+                return NotFound($"No Villa With ID {id}");
+
+            villaDto.ApplyTo(villa);
+
+            return Ok(villa);
+        }
     }
 
 }
