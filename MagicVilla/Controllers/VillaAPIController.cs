@@ -97,7 +97,7 @@ namespace MagicVilla.Controllers
             if (villa == null)
                 return NotFound($"No Villa With ID {id}");
 
-            villaDto.ApplyTo(villa);
+            villaDto.ApplyTo(villa,ModelState);
 
             return Ok(villa);
         }
