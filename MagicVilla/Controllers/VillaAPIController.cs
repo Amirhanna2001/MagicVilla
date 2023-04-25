@@ -21,7 +21,7 @@ namespace MagicVilla.Controllers
         [HttpGet]
         public ActionResult GetVillas()
         {
-            _logger.LogInformation("Get All Villas");
+            _logger.LogInformation("Message: Get All Villas");
             return Ok( VillaStore.villaList);
         }
 
@@ -35,7 +35,7 @@ namespace MagicVilla.Controllers
             if(villa == null) 
                 return NotFound($"No Villa With ID = {id}");
 
-            _logger.LogInformation($"Get Villa With ID {id}");
+            _logger.LogInformation($"Message: Get Villa With ID {id}");
 
             return Ok( villa );
         }
@@ -60,6 +60,8 @@ namespace MagicVilla.Controllers
 
             //VillaStore.villaList.Add(villaToInsert);
             VillaStore.villaList.Add(villa);
+            _logger.LogInformation($"Message: Villa {villa.Name} Create With ID =  {villa.ID}");
+
             return Ok(villaToInsert);
         }
         
@@ -74,7 +76,9 @@ namespace MagicVilla.Controllers
             if (villa == null)
                 return NotFound($"No Villa With ID {id}");
 
-            VillaStore.villaList.Remove(villa); 
+            VillaStore.villaList.Remove(villa);
+            _logger.LogInformation($"Message: Villa With ID {id} Deleted");
+
             return Ok(villa);
         }
 
@@ -90,6 +94,8 @@ namespace MagicVilla.Controllers
                 return NotFound($"No Villa With ID {id}");
 
             villa.Name = villaDto.Name;
+
+            _logger.LogInformation($"Message: Villa With ID {id} Updated");
 
             return Ok(villa);
         }
